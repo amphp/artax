@@ -3,13 +3,15 @@
 namespace Amp\Artax;
 
 use Amp\Deferred;
+use Amp\Failure;
 
 class BufferWriter implements Writer {
-    private $promisor;
+    private $promisors;
     private $socket;
     private $buffer;
     private $writeWatcher;
     private $bytesWritten = 0;
+    private $failed = false;
 
     /**
      * Write specified $dataToWrite to the $socket destination stream
@@ -19,14 +21,19 @@ class BufferWriter implements Writer {
      * @return \Amp\Promise
      */
     public function write($socket, $dataToWrite) {
-        $this->promisor = new Deferred;
+        if ($this->failed) {
+            return new Failure(new SocketException($this->generateWriteFailureMessage()));
+        }
+
+        $this->promisors[] = $promisor = new Deferred;
         $this->socket = $socket;
         $this->buffer = $dataToWrite;
+
         \Amp\immediately(function() {
             $this->doWrite();
         });
 
-        return $this->promisor->promise();
+        return $promisor->promise();
     }
 
     private function doWrite() {
@@ -35,7 +42,10 @@ class BufferWriter implements Writer {
         $this->bytesWritten += $bytesWritten;
 
         if ($bytesToWrite === $bytesWritten) {
-            $this->promisor->update($this->buffer);
+            foreach ($this->promisors as $promisor) {
+                $promisor->update($this->buffer);
+            }
+
             $this->succeed();
         } elseif (empty($bytesWritten) && $this->isSocketDead()) {
             $this->fail(new SocketException(
@@ -44,7 +54,11 @@ class BufferWriter implements Writer {
         } else {
             $notifyData = substr($this->buffer, 0, $bytesWritten);
             $this->buffer = substr($this->buffer, $bytesWritten);
-            $this->promisor->update($notifyData);
+
+            foreach ($this->promisors as $promisor) {
+                $promisor->update($notifyData);
+            }
+
             $this->enableWriteWatcher();
         }
     }
@@ -67,14 +81,22 @@ class BufferWriter implements Writer {
     }
 
     private function fail(\Exception $e) {
-        $this->promisor->fail($e);
+        $this->failed = true;
+
+        foreach ($this->promisors as $promisor) {
+            $promisor->fail($e);
+        }
+
         if ($this->writeWatcher) {
             \Amp\cancel($this->writeWatcher);
         }
     }
 
     private function succeed() {
-        $this->promisor->succeed();
+        foreach ($this->promisors as $promisor) {
+            $promisor->succeed();
+        }
+
         if ($this->writeWatcher) {
             \Amp\cancel($this->writeWatcher);
         }
