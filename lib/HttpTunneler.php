@@ -25,7 +25,7 @@ class HttpTunneler {
             try {
                 yield $socket->write("CONNECT {$authority} HTTP/1.1\r\n\r\n");
             } catch (StreamException $e) {
-                new SocketException(
+                throw new SocketException(
                     'Proxy CONNECT failed: Socket went away while writing tunneling request',
                     0,
                     $e
