@@ -2,6 +2,9 @@
 title: An Asynchronous HTTP Client for PHP
 permalink: /
 ---
+{:.warning}
+> This package has been replaced by [`http-client`](https://amphp.org/http-client)
+
 Artax is an asynchronous HTTP/1.1 client for PHP based on Amp. Its API simplifies standards-compliant HTTP resource traversal and RESTful web service consumption without obscuring the underlying protocol. The library manually implements HTTP over TCP sockets; as such it has no dependency on `ext/curl`.
 
 ## Installation

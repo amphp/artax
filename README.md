@@ -1,3 +1,5 @@
+### :warning: This package has been replaced by [`http-client`](https://amphp.org/http-client)
+
 # artax
 
 [![Build Status](https://img.shields.io/travis/amphp/artax/master.svg?style=flat-square)](https://travis-ci.org/amphp/artax)
