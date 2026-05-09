@@ -6,7 +6,7 @@ Artax is a no longer maintained asynchronous HTTP client for PHP based on [Amp](
 
 ## Deprecation
 
-This repository is deprecated in favor of [`amphp/http-server`](https://github.com/amphp/http-client).
+This repository is deprecated in favor of [`amphp/http-client`](https://github.com/amphp/http-client).
 It still exists to keep Packagist working as before.
 
 ## Features
@@ -50,7 +50,7 @@ More extensive code examples reside in the [`examples`](./examples) directory.
 
 ## Security
 
-This repository is no longer maintained. Please upgrade to `amphp/http-client` instead.
+This repository is no longer maintained. Please upgrade to [`amphp/http-client`](https://github.com/amphp/http-client) instead.
 
 ## License
 
