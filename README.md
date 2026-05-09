@@ -2,11 +2,14 @@
 
 # artax
 
-[![Build Status](https://img.shields.io/travis/amphp/artax/master.svg?style=flat-square)](https://travis-ci.org/amphp/artax)
-[![CoverageStatus](https://img.shields.io/coveralls/amphp/artax/master.svg?style=flat-square)](https://coveralls.io/github/amphp/artax?branch=master)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 
-Artax is an asynchronous HTTP client for PHP based on [Amp](https://github.com/amphp/amp). Its API simplifies standards-compliant HTTP resource traversal and RESTful web service consumption without obscuring the underlying protocol. The library manually implements HTTP over TCP sockets; as such it has no dependency on `ext/curl`.
+Artax is a no longer maintained asynchronous HTTP client for PHP based on [Amp](https://github.com/amphp/amp). Its API simplifies standards-compliant HTTP resource traversal and RESTful web service consumption without obscuring the underlying protocol. The library manually implements HTTP over TCP sockets; as such it has no dependency on `ext/curl`.
+
+## Deprecation
+
+This repository is deprecated in favor of [`amphp/http-server`](https://github.com/amphp/http-client).
+It still exists to keep Packagist working as before.
 
 ## Features
 
@@ -45,17 +48,11 @@ More extensive code examples reside in the [`examples`](./examples) directory.
 
 ## Versioning
 
-`amphp/artax` follows the [semver](http://semver.org/) semantic versioning specification like all other `amphp` packages.
-
-| Version | Bug Fixes Until              | Security Fixes Until         |
-| ------- | ---------------------------- | ---------------------------- |
-| 3.x     | Supported, no end date, yet. | Supported, no end date, yet. |
-| 2.x     | Unmaintained.	             | Unmaintained.	            |
-| 1.x     | Unmaintained.                | Unmaintained.                |
+`amphp/artax` followed the [semver](http://semver.org/) semantic versioning specification like all other `amphp` packages. There won't be any new releases anymore.
 
 ## Security
 
-If you discover any security related issues, please email [`me@kelunik.com`](mailto:me@kelunik.com) instead of using the issue tracker.
+This repository is no longer maintained. Please upgrade to `amphp/http-client` instead.
 
 ## License
 
